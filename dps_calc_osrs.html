@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>OSRS DPS Calculator</title>
+	</head>
+	<body>
+		<table width="95%" cols="3" align="center">
+			<tr>
+				<td width="25%">
+					Main-hand:
+					<select id="main_hand" onchange="setStyles()">
+						<option value="unarmed">Unarmed</option>
+						<option value="dragon_warhammer">Dragon Warhammer</option>
+						<option value="granite_hammer">Granite Hammer</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Off-hand:
+					<select id="off-hand" onchange="Update()">
+						<option value="no_off_hand">None</option>
+						<option value="rune_defender">Rune Defender</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Helmet:
+					<select id="head" onchange="Update()">
+						<option value="no_head">None</option>
+						<option value="slayer_helmet">Slayer Helmet</option>
+						<option value="void_melee_helm">Void Melee Helm</option>
+						<option value="inquisitor_great_helm">Inquisitor's Great Helm</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Cape:
+					<select id="cape" onchange="Update()">
+						<option value="no_cape">None</option>
+						<option value="fire_cape">Fire Cape</option>
+						<option value="mythical_cape">Mythical Cape</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Ammo:
+					<select id="ammo" onchange="Update()">
+						<option value="no_ammo">None</option>
+						<option value="rada_blessing">Rada's Blessing 4</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Neck:
+					<select id="neck" onchange="Update()">
+						<option value="no_neck">None</option>
+						<option value="amulet_of_torture">Amulet of Torture</option>
+						<option value="salve_amulet_ei">Salve Amulet (ei)</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Chest:
+					<select id="chest" onchange="Update()">
+						<option value="no_chest">None</option>
+						<option value="fighter_torso">Fighter Torso</option>
+						<option value="elite_void_top">Elite Void Top</option>
+						<option value="inquisitor_hauberk">Inquisitor's Hauberk</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Legs:
+					<select id="legs" onchange="Update()">
+						<option value="no_legs">None</option>
+						<option value="elite_void_robe">Elite Void Robe</option>
+						<option value="inquisitor_plateskirt">Inquisitor's Plateskirt</option>
+						<option value="fremmenik_kilt">Fremmenik Kilt</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Gloves:
+					<select id="gloves" onchange="Update()">
+						<option value="no_gloves">None</option>
+						<option value="barrows_gloves">Barrows Gloves</option>
+						<option value="void_knight_gloves">Void Knight Gloves</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Boots:
+					<select id="boots" onchange="Update()">
+						<option value="no_boots">None</option>
+						<option value="rune_boots">Rune Boots</option>
+					</select>
+					
+					<br/>
+					<br/>
+					
+					Ring:
+					<select id="ring" onchange="Update()">
+						<option value="no_ring">None</option>
+						<option value="berserker_ring_i">Berserker Ring (i)</option>
+						<option value="tyrannical_ring_i">Tyrannical Ring (i)</option>
+					</select>
+					
+					<br/>
+					<br/>
+					<br/>
+					
+					Attack Style:
+					<select id="style" onchange="Update()">
+						<option value="Crush-Accurate">Crush - Accurate</option>
+						<option value="Crush-Aggressive">Crush - Aggressive</option>
+						<option value="Crush-Defensive">Crush - Defensive</option>
+					</select>
+				</td>
+				<td width="33%">
+					<table width="60%" cols="3" align="center">
+						<tr>
+							<th width="33%"></th>
+							<th width="33%">
+								<img src="head_slot.png" width="100%" id="head_image"/></th>
+							<th width="33%"></th>
+						</tr>
+						<tr>
+							<th><img src="cape_slot.png" width="100%" id="cape_image"/></th>
+							<th><img src="neck_slot.png" width="100%" id="neck_image"/></th>
+							<th><img src="ammo_slot.png" width="100%" id="ammo_image"/></th>
+						</tr>
+						<tr>
+							<th><img src="main_hand.png" width="100%" id="main_hand_image"/></th>
+							<th><img src="chest_slot.png" width="100%" id="chest_image"/></th>
+							<th><img src="off_hand.png" width="100%" id="off-hand_image"/></th>
+						</tr>
+						<tr>
+							<th></th>
+							<th><img src="leg_slot.png" width="100%" id="legs_image"/></th>
+							<th></th>
+						</tr>
+						<tr>
+							<th><img src="glove_slot.png" width="100%" id="gloves_image"/></th>
+							<th><img src="boot_slot.png" width="100%" id="boots_image"/></th>
+							<th><img src="ring_slot.png" width="100%" id="ring_image"/></th>
+						</tr>
+					</table>
+				</td>
+				<td width="17%">
+					<h3 align="center"><b>Attack Bonuses</b></h3>
+					<h4 align="center" id="playerStabAtt">Stab: 0</h4>
+					<h4 align="center" id="playerSlashAtt">Slash: 0</h4>
+					<h4 align="center" id="playerCrushAtt">Crush: 0</h4>
+					<h4 align="center" id="playerMageAtt">Magic: 0</h4>
+					<h4 align="center" id="playerRangeAtt">Ranged: 0</h4>
+					<h3 align="center"><b>Strength Bonus</b></h3>
+					<h4 align="center" id="playerMeleeStr">0</h4>
+					<h3 align="center"><b>Attack Speed</b></h3>
+					<h4 align="center" id="playerAttSpeed">4 frames</h4>
+				</td>
+				<td width="25%">
+					<form>
+						<fieldset>
+							<legend>Stats</legend>
+							<input type="text" placeholder="Attack Level" id="attLevel" onchange="Update()"/>
+							<input type="text" placeholder="Strength Level" id="strLevel" onchange="Update()"/>
+							<input type="text" placeholder="Monster Defense" id="monsterDefense" onchange="Update()"/>
+							<input type="text" placeholder="Type-Specific Defense" id="typeDefense" onchange="Update()"/>
+						</fieldset>
+						<fieldset>
+							<legend>Attack / Strength Boosts</legend>
+							<input type="checkbox" id="attack_potion" onchange="Update()"/>Attack Potion<br/>
+							<input type="checkbox" id="super_attack" onchange="Update()"/>Super Attack<br/>
+							<input type="checkbox" id="strength_potion" onchange="Update()"/>Strength Potion<br/>
+							<input type="checkbox" id="super_strength" onchange="Update()"/>Super Strength<br/>
+							<input type="checkbox" id="super_combat_potion" onchange="Update()"/>Super Combat Potion<br/>
+							<input type="checkbox" id="overload_plus" onchange="Update()"/>Overload (+)
+						</fieldset>
+						<fieldset>
+							<legend>Prayer</legend>
+							<input type="checkbox" id="burst_of_strength" onchange="Update()"/>Burst of Strength<br/>
+							<input type="checkbox" id="clarity_of_thought" onchange="Update()"/>Clarity of Thought<br/>
+							<input type="checkbox" id="superhuman_strength" onchange="Update()"/>Superhuman Strength<br/>
+							<input type="checkbox" id="improved_reflexes" onchange="Update()"/>Improved Reflexes<br/>
+							<input type="checkbox" id="ultimate_strength" onchange="Update()"/>Ultimate Strength<br/>
+							<input type="checkbox" id="incredible_reflexes" onchange="Update()"/>Incredible Reflexes<br/>
+							<input type="checkbox" id="chivalry" onchange="Update()"/>Chivalry<br/>
+							<input type="checkbox" id="piety" onchange="Update()"/>Piety<br/>
+						</fieldset>
+						<fieldset>
+							<legend>Other</legend>
+							<input type="checkbox" id="undead" onchange="Update()"/>Target is Undead<br/>
+							<input type="checkbox" id="slayer" onchange="Update()"/>Target is the active Slayer Task<br/>
+						</fieldset>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<h1 id = "effectiveAttack"></h1>
+		<h1 id = "attackRoll"></h1>
+		<h1 id = "maxHit"></h1>
+		<h1 id = "hitChance"></h1>
+		<h1 id = "dps"></h1>
+			
+		<script>
+			var playerStabAtt = 0;
+			var playerSlashAtt = 0;
+			var playerCrushAtt = 0;
+			var playerMageAtt = 0;
+			var playerRangeAtt = 0;
+			var playerMeleeStr = 0;
+			var playerAttSpeed = 4;
+			
+			function meleeWeapon(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr, frameSpeed, styles){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+				this.frameSpeed = frameSpeed;
+				this.styles = styles;
+			}
+			
+			function off_hand(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function helmet(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function cape(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function ammo(name, image_source){
+				this.name = name;
+				this.image_source = image_source;
+			}
+			
+			function neck(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function chest(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function leg(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function glove(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function boot(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			function ring(name, image_source, stabAtt, slashAtt, crushAtt, mageAtt, rangeAtt, meleeStr){
+				this.name = name;
+				this.image_source = image_source;
+				this.stabAtt = stabAtt;
+				this.slashAtt = slashAtt;
+				this.crushAtt = crushAtt;
+				this.mageAtt = mageAtt;
+				this.rangeAtt = rangeAtt;
+				this.meleeStr = meleeStr;
+			}
+			
+			var meleeWeapons = [
+				/*Unarmed*/new meleeWeapon("unarmed", "main_hand.png", 0, 0, 0, 0, 0, 0, 4, ["Crush-Accurate", "Crush-Aggressive", "Crush-Defensive"]),
+				/*Dragon Warhammer*/new meleeWeapon("dragon_warhammer", "weaponPics/dragon_warhammer.png", -4, -4, 95, -4, 0, 85, 6, ["Crush-Accurate", "Crush-Aggressive", "Crush-Defensive"]),
+				/*Granite Hammer*/new meleeWeapon("granite_hammer", "weaponPics/granite_hammer.png", 0, 0, 57, -3, -1, 56, 4, ["Crush-Accurate", "Crush-Aggressive", "Crush-Defensive"])
+			];
+			
+			var off_hands = [
+				/*Rune Defender*/new off_hand("rune_defender", "offHandPics/rune_defender.png", 20, 19, 18, -3, -2, 5)
+			];
+			
+			var helmets = [
+				/*Slayer Helmet*/new helmet("slayer_helmet", "helmetPics/slayer_helmet.png", 0, 0, 0, -6, -2, 0),
+				/*Void Melee Melm*/new helmet("void_melee_helm", "helmetPics/void_melee_helm.png", 0, 0, 0, 0, 0, 0),
+				/*Inquisitor's Great Helm*/new helmet("inquisitor_great_helm", "helmetPics/inquisitor_great_helm.png", -2, -2, 8, -5, -5, 4)
+			];
+				
+			var capes = [
+				/*Fire Cape*/new cape("fire_cape", "capePics/fire_cape.png", 1, 1, 1, 1, 1, 4),
+				/*Mythical Cape*/new cape("mythical_cape", "capePics/mythical_cape.png", 0, 0, 6, 0, 0, 1)
+			];
+				
+			var ammos = [
+				/*Rada's Blessing 4*/new ammo("rada_blessing", "ammoPics/rada_blessing.png")
+			];
+			
+			var necks = [
+				/*Amulet of Torture*/new neck("amulet_of_torture", "neckPics/amulet_of_torture.png", 15, 15, 15, 0, 0, 10),
+				/*Salve Amulet (ei)*/new neck("salve_amulet_ei", "neckPics/salve_amulet_ei.png", 0, 0, 0, 0, 0, 0)
+			];
+			
+			var chests = [
+				/*Fighter Torso*/new chest("fighter_torso", "chestPics/fighter_torso.png", 0, 0, 0, -40, 0, 4),
+				/*Inquisitor's Hauberk*/new chest("inquisitor_hauberk", "chestPics/inquisitor_hauberk.png", -3, -3, 12, -11, 10, 4),
+				/*Elite Void Top*/new chest("elite_void_top", "chestPics/elite_void_top.png", 0, 0, 0, 0, 0, 0)
+			];
+			
+			var legs = [
+				/*Elite Void Robe*/new leg("elite_void_robe", "legPics/elite_void_robe.png", 0, 0, 0, 0, 0, 0),
+				/*Inquisitor's Plateskirt*/new leg("inquisitor_plateskirt", "legPics/inquisitor_plateskirt.png", -3, -3, 12, -9, -5, 2),
+				/*Fremmenik Kilt*/new leg("fremmenik_kilt", "legPics/fremmenik_kilt.png", 0, 0, 0, -21, -7, 1)
+			];
+			
+			var gloves = [
+				/*Barrows Gloves*/new glove("barrows_gloves", "glovePics/barrows_gloves.png", 12, 12, 12, 6, 12, 12),
+				/*Void Knight Gloves*/new glove("void_knight_gloves", "glovePics/void_knight_gloves.png", 0, 0, 0, 0, 0, 0)
+			];
+			
+			var boots = [
+				/*Rune Boots*/new boot("rune_boots", "bootPics/rune_boots.png", 0, 0, 0, -3, -1, 2)
+			];
+			
+			var rings = [
+				/*Berserker Ring (i)*/new ring("berserker_ring_i", "ringPics/berserker_ring_i.png", 0, 0, 0, 0, 0, 8),
+				/*Tyrannical Ring (i)*/new ring("tyrannical_ring_i", "ringPics/tyrannical_ring_i.png", 0, 0, 8, 0, 0, 0)
+			];
+			
+			function Update(){
+				var currentWeapon;
+				playerStabAtt = 0;
+				playerSlashAtt = 0;
+				playerCrushAtt = 0;
+				playerMageAtt = 0;
+				playerRangeAtt = 0;
+				playerMeleeStr = 0;
+				playerAttSpeed = 4;
+				
+				var attLevel = Number(document.getElementById('attLevel').value);
+				var strLevel = Number(document.getElementById('strLevel').value);
+				var attLevelBoost = 0;
+				var strLevelBoost = 0;
+				
+				if(document.getElementById('overload_plus').checked){
+					attLevelBoost = Math.trunc(attLevel * (16 / 100) + 6);
+					strLevelBoost = Math.trunc(strLevel * (16 / 100) + 6);
+					document.getElementById('attack_potion').checked = false;
+					document.getElementById('super_attack').checked = false;
+					document.getElementById('strength_potion').checked = false;
+					document.getElementById('super_strength').checked = false;
+					document.getElementById('super_combat_potion').checked = false;
+				}
+				else if(document.getElementById('super_combat_potion').checked){
+					attLevelBoost = Math.trunc(attLevel * (15 / 100) + 5);
+					strLevelBoost = Math.trunc(strLevel * (15 / 100) + 5);
+					document.getElementById('attack_potion').checked = false;
+					document.getElementById('super_attack').checked = false;
+					document.getElementById('strength_potion').checked = false;
+					document.getElementById('super_strength').checked = false;
+				}
+				else{
+					if(document.getElementById('super_attack').checked){
+						attLevelBoost = Math.trunc(attLevel * (15 / 100) + 5);
+						document.getElementById('attack_potion').checked = false;
+					}
+					else if(document.getElementById('attack_potion').checked){
+						attLevelBoost = Math.trunc(attLevel * (10 / 100) + 3);
+					}
+					
+					if(document.getElementById('super_strength').checked){
+						strLevelBoost = Math.trunc(strLevel * (15 / 100) + 5);
+						document.getElementById('strength_potion').checked = false;
+					}
+					else if(document.getElementById('strength_potion').checked){
+						strLevelBoost = Math.trunc(strLevel * (10 / 100) + 3);
+					}
+				}
+				
+				var attPrayerBonus = 1.0;
+				var strPrayerBonus = 1.0;
+				if(document.getElementById('piety').checked){
+					attPrayerBonus = 1.2;
+					strPrayerBonus = 1.23;
+					document.getElementById('chivalry').checked = false;
+					document.getElementById('incredible_reflexes').checked = false;
+					document.getElementById('improved_reflexes').checked = false;
+					document.getElementById('clarity_of_thought').checked = false;
+					document.getElementById('ultimate_strength').checked = false;
+					document.getElementById('superhuman_strength').checked = false;
+					document.getElementById('burst_of_strength').checked = false;
+				}
+				else if(document.getElementById('chivalry').checked){
+					attPrayerBonus = 1.15;
+					strPrayerBonus = 1.18;
+					document.getElementById('incredible_reflexes').checked = false;
+					document.getElementById('improved_reflexes').checked = false;
+					document.getElementById('clarity_of_thought').checked = false;
+					document.getElementById('ultimate_strength').checked = false;
+					document.getElementById('superhuman_strength').checked = false;
+					document.getElementById('burst_of_strength').checked = false;
+				}
+				else{
+					if(document.getElementById('incredible_reflexes').checked){
+						attPrayerBonus = 1.15;
+						document.getElementById('improved_reflexes').checked = false;
+						document.getElementById('clarity_of_thought').checked = false;
+					}
+					else if(document.getElementById('improved_reflexes').checked){
+						attPrayerBonus = 1.1;
+						document.getElementById('clarity_of_thought').checked = false;
+					}
+					else if(document.getElementById('clarity_of_thought').checked){
+						attPrayerBonus = 1.05;
+					}
+					
+					if(document.getElementById('ultimate_strength').checked){
+						strPrayerBonus = 1.15;
+						document.getElementById('superhuman_strength').checked = false;
+						document.getElementById('burst_of_strength').checked = false;
+					}
+					else if(document.getElementById('superhuman_strength').checked){
+						strPrayerBonus = 1.1;
+						document.getElementById('burst_of_strength').checked = false;
+					}
+					else if(document.getElementById('burst_of_strength').checked){
+						strPrayerBonus = 1.05;
+					}
+				}
+					
+										
+										
+				if(document.getElementById('main_hand').value == "no_main_hand"){
+					document.getElementById('main_hand_image').src = "main_hand.png";
+				}
+				if(document.getElementById('off-hand').value == "no_off_hand"){
+					document.getElementById('off-hand_image').src = "off_hand.png";
+				}
+				if(document.getElementById('head').value == "no_head"){
+					document.getElementById('head_image').src = "head_slot.png";
+				}
+				if(document.getElementById('cape').value == "no_cape"){
+					document.getElementById('cape_image').src = "cape_slot.png";
+				}
+				if(document.getElementById('ammo').value == "no_ammo"){
+					document.getElementById('ammo_image').src = "ammo_slot.png";
+				}
+				if(document.getElementById('neck').value == "no_neck"){
+					document.getElementById('neck_image').src = "neck_slot.png";
+				}
+				if(document.getElementById('chest').value == "no_chest"){
+					document.getElementById('chest_image').src = "chest_slot.png";
+				}
+				if(document.getElementById('legs').value == "no_legs"){
+					document.getElementById('legs_image').src = "leg_slot.png";
+				}
+				if(document.getElementById('gloves').value == "no_gloves"){
+					document.getElementById('gloves_image').src = "glove_slot.png";
+				}
+				if(document.getElementById('boots').value == "no_boots"){
+					document.getElementById('boots_image').src = "boot_slot.png";
+				}
+				if(document.getElementById('ring').value == "no_ring"){
+					document.getElementById('ring_image').src = "ring_slot.png";
+				}
+				
+				for(var i = 0; i < meleeWeapons.length; i++){
+					if(document.getElementById('main_hand').value == meleeWeapons[i].name){
+						currentWeapon = meleeWeapons[i];
+						playerStabAtt += meleeWeapons[i].stabAtt;
+						playerSlashAtt += meleeWeapons[i].slashAtt;
+						playerCrushAtt += meleeWeapons[i].crushAtt;
+						playerMageAtt += meleeWeapons[i].mageAtt;
+						playerRangeAtt += meleeWeapons[i].rangeAtt;
+						playerMeleeStr += meleeWeapons[i].meleeStr;
+						playerAttSpeed = meleeWeapons[i].frameSpeed;
+						
+						document.getElementById('main_hand_image').src = meleeWeapons[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < off_hands.length; i++){
+					if(document.getElementById('off-hand').value == off_hands[i].name){
+						playerStabAtt += off_hands[i].stabAtt;
+						playerSlashAtt += off_hands[i].slashAtt;
+						playerCrushAtt += off_hands[i].crushAtt;
+						playerMageAtt += off_hands[i].mageAtt;
+						playerRangeAtt += off_hands[i].rangeAtt;
+						playerMeleeStr += off_hands[i].meleeStr;
+						
+						document.getElementById('off-hand_image').src = off_hands[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < helmets.length; i++){
+					if(document.getElementById('head').value == helmets[i].name){
+						playerStabAtt += helmets[i].stabAtt;
+						playerSlashAtt += helmets[i].slashAtt;
+						playerCrushAtt += helmets[i].crushAtt;
+						playerMageAtt += helmets[i].mageAtt;
+						playerRangeAtt += helmets[i].rangeAtt;
+						playerMeleeStr += helmets[i].meleeStr;
+						
+						document.getElementById('head_image').src = helmets[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < capes.length; i++){
+					if(document.getElementById('cape').value == capes[i].name){
+						playerStabAtt += capes[i].stabAtt;
+						playerSlashAtt += capes[i].slashAtt;
+						playerCrushAtt += capes[i].crushAtt;
+						playerMageAtt += capes[i].mageAtt;
+						playerRangeAtt += capes[i].rangeAtt;
+						playerMeleeStr += capes[i].meleeStr;
+						
+						document.getElementById('cape_image').src = capes[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < ammos.length; i++){
+					if(document.getElementById('ammo').value == ammos[i].name){
+						document.getElementById('ammo_image').src = ammos[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < necks.length; i++){
+					if(document.getElementById('neck').value == necks[i].name){
+						playerStabAtt += necks[i].stabAtt;
+						playerSlashAtt += necks[i].slashAtt;
+						playerCrushAtt += necks[i].crushAtt;
+						playerMageAtt += necks[i].mageAtt;
+						playerRangeAtt += necks[i].rangeAtt;
+						playerMeleeStr += necks[i].meleeStr;
+						
+						document.getElementById('neck_image').src = necks[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < chests.length; i++){
+					if(document.getElementById('chest').value == chests[i].name){
+						playerStabAtt += chests[i].stabAtt;
+						playerSlashAtt += chests[i].slashAtt;
+						playerCrushAtt += chests[i].crushAtt;
+						playerMageAtt += chests[i].mageAtt;
+						playerRangeAtt += chests[i].rangeAtt;
+						playerMeleeStr += chests[i].meleeStr;
+						
+						document.getElementById('chest_image').src = chests[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < legs.length; i++){
+					if(document.getElementById('legs').value == legs[i].name){
+						playerStabAtt += legs[i].stabAtt;
+						playerSlashAtt += legs[i].slashAtt;
+						playerCrushAtt += legs[i].crushAtt;
+						playerMageAtt += legs[i].mageAtt;
+						playerRangeAtt += legs[i].rangeAtt;
+						playerMeleeStr += legs[i].meleeStr;
+						
+						document.getElementById('legs_image').src = legs[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < gloves.length; i++){
+					if(document.getElementById('gloves').value == gloves[i].name){
+						playerStabAtt += gloves[i].stabAtt;
+						playerSlashAtt += gloves[i].slashAtt;
+						playerCrushAtt += gloves[i].crushAtt;
+						playerMageAtt += gloves[i].mageAtt;
+						playerRangeAtt += gloves[i].rangeAtt;
+						playerMeleeStr += gloves[i].meleeStr;
+						
+						document.getElementById('gloves_image').src = gloves[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < boots.length; i++){
+					if(document.getElementById('boots').value == boots[i].name){
+						playerStabAtt += boots[i].stabAtt;
+						playerSlashAtt += boots[i].slashAtt;
+						playerCrushAtt += boots[i].crushAtt;
+						playerMageAtt += boots[i].mageAtt;
+						playerRangeAtt += boots[i].rangeAtt;
+						playerMeleeStr += boots[i].meleeStr;
+						
+						document.getElementById('boots_image').src = boots[i].image_source;
+					}
+				}
+				
+				for(var i = 0; i < rings.length; i++){
+					if(document.getElementById('ring').value == rings[i].name){
+						playerStabAtt += rings[i].stabAtt;
+						playerSlashAtt += rings[i].slashAtt;
+						playerCrushAtt += rings[i].crushAtt;
+						playerMageAtt += rings[i].mageAtt;
+						playerRangeAtt += rings[i].rangeAtt;
+						playerMeleeStr += rings[i].meleeStr;
+						
+						document.getElementById('ring_image').src = rings[i].image_source;
+					}
+				}
+				
+				document.getElementById('playerStabAtt').innerHTML = "Stab: " + playerStabAtt;
+				document.getElementById('playerSlashAtt').innerHTML = "Slash: " + playerSlashAtt;
+				document.getElementById('playerCrushAtt').innerHTML = "Crush: " + playerCrushAtt;
+				document.getElementById('playerMageAtt').innerHTML = "Magic: " + playerMageAtt;
+				document.getElementById('playerRangeAtt').innerHTML = "Ranged: " + playerRangeAtt;
+				document.getElementById('playerMeleeStr').innerHTML = playerMeleeStr;
+				document.getElementById('playerAttSpeed').innerHTML = playerAttSpeed + " frames";
+				
+				
+				var attackType = document.getElementById('style').value.substring(0, document.getElementById('style').value.indexOf("-"));
+				var attackStyle = document.getElementById('style').value.substring(document.getElementById('style').value.indexOf("-") + 1);
+				
+				var attStyleBonus = 0;
+				var strStyleBonus = 0;
+				if(attackStyle == "Accurate"){
+					attStyleBonus = 3;
+				}
+				if(attackStyle == "Controlled"){
+					attStyleBonus = 1;
+					strStyleBonus = 1;
+				}
+				if(attackStyle == "Aggressive"){
+					strStyleBonus = 3;
+				}
+				
+				
+				var attEquipmentBonus = 0;
+				if(attackType == "Crush"){
+					attEquipmentBonus = playerCrushAtt;
+				}
+				if(attackType == "Stab"){
+					attEquipmentBonus = playerStabAtt;
+				}
+				if(attackType == "Slash"){
+					attEquipmentBonus = playerSlashAtt;
+				}
+				
+				var attGearBonus = 1.0;
+				
+				
+				
+				
+				var voidBonus = 1.0;
+				if(document.getElementById('gloves').value == "void_knight_gloves"
+				&& document.getElementById('chest').value == "elite_void_top"
+				&& document.getElementById('legs').value == "elite_void_robe"
+				&& document.getElementById('head').value == "void_melee_helm"){
+					voidBonus = 1.1;
+				}
+				
+				var gearBonus = 1.0;
+				if(document.getElementById('neck').value == "salve_amulet_ei" && document.getElementById('undead').checked){
+					gearBonus *= 1.2;
+				}
+				else if(document.getElementById('head').value == "slayer_helmet" && document.getElementById('slayer').checked){
+					gearBonus *= 7/6;
+				}
+
+				if(attackType == "Crush"){
+					var totalInquisitor = 0;
+					if(document.getElementById('head').value == "inquisitor_great_helm"){
+						totalInquisitor++;
+					}
+					if(document.getElementById('chest').value == "inquisitor_hauberk"){
+						totalInquisitor++;
+					}
+					if(document.getElementById('legs').value == "inquisitor_plateskirt"){
+						totalInquisitor++;
+					}
+					switch(totalInquisitor){
+						case 0:
+							break;
+							
+						case 1:
+							gearBonus *= 1.005;
+							break;
+							
+						case 2:
+							gearBonus *= 1.01;
+							break;
+							
+						case 3:
+							gearBonus *= 1.025;
+							break;
+					}
+				}
+					
+				
+			
+				var effectiveAttack = Math.trunc((Math.trunc((attLevel + attLevelBoost) * attPrayerBonus) + attStyleBonus + 8) * voidBonus);
+				var attackRoll = Math.trunc(effectiveAttack*(attEquipmentBonus + 64) * gearBonus);	
+				var effectiveStrength = Math.trunc((Math.trunc((strLevel + strLevelBoost) * strPrayerBonus) + strStyleBonus + 8) * voidBonus);
+				var maxHit = Math.trunc(Math.trunc((effectiveStrength*(playerMeleeStr + 64) + 320)/640) * gearBonus);
+			
+				document.getElementById('effectiveAttack').innerHTML = effectiveAttack;
+				document.getElementById('attackRoll').innerHTML = attackRoll;
+				document.getElementById('maxHit').innerHTML = maxHit;
+				
+				var defenseRoll = (Number(document.getElementById('monsterDefense').value) + 9) * (Number(document.getElementById('typeDefense').value) + 64);
+				
+				var hitChance = 0;
+				if(attackRoll > defenseRoll){
+					hitChance = 1 - (defenseRoll + 2) / (2 * (attackRoll + 1));
+				}
+				else{
+					hitChance = attackRoll / (2 * defenseRoll + 1);
+				}
+				
+				document.getElementById('hitChance').innerHTML = hitChance;
+				
+				var dps = maxHit * hitChance / 2 / (playerAttSpeed * .6);
+				
+				document.getElementById('dps').innerHTML = dps;
+				
+					
+			}
+			
+			
+			function setStyles(){
+				var styleBuilder = "";
+				var currentWeapon ;
+				for(var i = 0; i < meleeWeapons.length; i++){
+					if(document.getElementById('main_hand').value == meleeWeapons[i].name){
+						currentWeapon = meleeWeapons[i];
+					}
+				}
+				for(var i = 0; i < currentWeapon.styles.length; i++){
+					styleBuilder += "<option value=" + currentWeapon.styles[i] + ">" + currentWeapon.styles[i].substring(0, currentWeapon.styles[i].indexOf("-")) + " - " + currentWeapon.styles[i].substring(currentWeapon.styles[i].indexOf("-") + 1) + "</option>";
+				}
+				document.getElementById('style').innerHTML = styleBuilder;
+				Update();
+			}
+		</script>
+		
+	</body>
+</html>

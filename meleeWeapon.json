@@ -1,0 +1,51 @@
+[
+	{
+		"name": "Dragon warhammer",
+		"image_source": "weaponPics/dragon_warhammer.png",
+		"stab_attack": -4,
+		"slash_attack": -4,
+		"crush_attack": 95,
+		"magic_attack": -4,
+		"ranged_attack": 0,
+		"stab_defense": 0,
+		"slash_defense": 0,
+		"crush_defense": 0,
+		"magic_defense": 0,
+		"ranged_defense": 0,
+		"melee_strength": 85,
+		"ranged_strength": 0,
+		"magic_strength": 0,
+		"prayer": 0,
+		"tick_speed": 6,
+		"styles": [
+			"crush_accurate",
+			"crush_aggressive",
+			"crush_defensive"
+		]
+	},
+	
+	{
+		"name": "Granite hammer",
+		"image_source": "weaponPics/granite_hammer.png",
+		"stab_attack": 0,
+		"slash_attack": 0,
+		"crush_attack": 57,
+		"magic_attack": -3,
+		"ranged_attack": -1,
+		"stab_defense": 0,
+		"slash_defense": 0,
+		"crush_defense": 0,
+		"magic_defense": 0,
+		"ranged_defense": 0,
+		"melee_strength": 56,
+		"ranged_strength": 0,
+		"magic_strength": 0,
+		"prayer": 0,
+		"tick_speed": 4,
+		"styles": [
+			"crush_accurate",
+			"crush_aggressive",
+			"crush_defensive"
+		]
+	}
+]
